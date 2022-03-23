@@ -72,7 +72,7 @@ namespace RagnarokCore.Patches
 					num *= _this._exhausted.maxStaminaMultiplier;
 				}
 				_this._regenerationTimer = 0f;
-				if (!_this._invigorated.enabled)
+				if (!_this._invigorated.enabled.OnCallingMethod)
 				{
 					// *************************** //
 					// Everything above is code from Northwood.
@@ -101,7 +101,7 @@ namespace RagnarokCore.Patches
 			_this.RemainingStamina = Mathf.Clamp01(_this.RemainingStamina);
 			// *************************** //
 			// We patched this, so reset it here
-			_this._prevPosition = _this._hub.playerMovementSync.RealModelPosition;
+			_this._prevPosition = _this._hub.playerMovementSync.RealModeCmdCaller;
 			// *************************** //
 		}
 	}
