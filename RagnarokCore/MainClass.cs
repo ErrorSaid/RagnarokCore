@@ -27,6 +27,8 @@ namespace RagnarokCore
             PlayerHandler.ChangingGroup += Ev.OnChangingGroup;
             ServerHandler.RespawningTeam += Ev.OnRespawningChaos;
             Scp330Handler.EatingScp330 += Ev.OnEating330;
+            PlayerHandler.Banning += Ev.OnBanning;
+            PlayerHandler.ChangingRole += Ev.OnChangingRole;
 
             base.OnEnabled();
             Patch();
@@ -36,6 +38,8 @@ namespace RagnarokCore
             PlayerHandler.ChangingGroup -= Ev.OnChangingGroup;
             ServerHandler.RespawningTeam -= Ev.OnRespawningChaos;
             Scp330Handler.EatingScp330 -= Ev.OnEating330;
+            PlayerHandler.Banning -= Ev.OnBanning;
+            PlayerHandler.ChangingRole -= Ev.OnChangingRole;
 
             Singleton = null;
             Ev = null;

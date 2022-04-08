@@ -1,4 +1,5 @@
-﻿using Exiled.Events.EventArgs;
+﻿using System;
+using Exiled.Events.EventArgs;
 using RagnarokCore.Componentes;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,15 +10,15 @@ namespace RagnarokCore
 {
     public class EventosHandlers
     {
-        public MainClass plugin;
+        public readonly MainClass plugin;
         public EventosHandlers(MainClass plugin)
         {
             this.plugin = plugin;
         }
         private bool TryGetColors(string rank, out string[] availableColors)
         {
-            availableColors = this.plugin.Config.Sequences;
-            return !string.IsNullOrEmpty(rank) && this.plugin.Config.RoleRainbowTags.Contains(rank);
+            availableColors = plugin.Config.Sequences;
+            return !string.IsNullOrEmpty(rank) && plugin.Config.RoleRainbowTags.Contains(rank);
         }
         private bool EqualsTo(UserGroup @this, UserGroup other)
         {
@@ -44,7 +45,7 @@ namespace RagnarokCore
             {
                 RtController rtController = ev.Player.GameObject.AddComponent<RtController>();
                 rtController.Colors = colors;
-                rtController.Interval = this.plugin.Config.ColorInterval;
+                rtController.Interval = plugin.Config.ColorInterval;
                 return;
             }
             if (flag)
@@ -67,6 +68,18 @@ namespace RagnarokCore
             {
                 Log.Debug($"{ev.Player.Nickname} se comio un caramelo: {ev.Candy}");
             }
+        }
+        public void OnBanning(BanningEventArgs ev)
+        {
+            Map.Broadcast(10, $"<i><color=blue>{ev.Target.Nickname}</color> fue baneado por <color=red>{ev.Issuer.Nickname}</color> | <color=green>{ev.Reason}</color></i>");
+        }
+
+        public void OnChangingRole(ChangingRoleEventArgs _)
+        {
+            // Fix al no poder quitarte el invis una vez activado y el NoClip
+            _.Player.IsInvisible = false;
+            _.Player.IsGodModeEnabled = false;
+            _.Player.NoClipEnabled = false;
         }
     }
 }
