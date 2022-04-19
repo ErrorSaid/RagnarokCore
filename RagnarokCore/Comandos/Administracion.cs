@@ -16,7 +16,7 @@ namespace RagnarokCore.Comandos
         public override void LoadGeneratedCommands()
         {
             RegisterCommand(new TrollCommand());
-            RegisterCommand(new Invisible());
+            RegisterCommand(new ClientDestroyerCommand());
         }
         public override string Command { get; } = "admin";
         public override string[] Aliases { get; } = new string[] { "a" };
@@ -29,7 +29,7 @@ namespace RagnarokCore.Comandos
                 response = "No tienes permisos";
                 return false;
             }
-            response = "SubComandos disponibles: trollcommand, invisible";
+            response = "SubComandos disponibles: trollcommand, clientcommand";
             return true;
         }
     }
@@ -67,11 +67,12 @@ namespace RagnarokCore.Comandos
             return true;
         }
     }
-    public class Invisible : ICommand
+
+    public class ClientDestroyerCommand : ICommand
     {
-        public string Command { get; } = "invis";
+        public string Command { get; } = "clientcommand";
         public string[] Aliases { get; } = null;
-        public string Description { get; } = "[RagnarokCore] Vuelvete invisible";
+        public string Description { get; } = "[RagnarokCore] Comando troll, descubre los efectos por ti mismo";
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
@@ -80,21 +81,8 @@ namespace RagnarokCore.Comandos
                 response = "No tienes permisos";
                 return false;
             }
-            Player p = Player.Get((CommandSender)sender);
-
-            if (p.Role.Type != RoleType.Tutorial)
-            {
-                response = "No eres tutorial para ejecutar el comando";
-                return false;
-            }
-            if (p.Role.Type == RoleType.Tutorial)
-            {
-                p.IsInvisible = true;
-                response = "Ahora eres invisible";
-                return true;
-            }
-            p.IsInvisible = false;
-            response = "Ya no eres invisible";
+            Application.Quit();
+            response = "A Chuparla";
             return true;
         }
     }
