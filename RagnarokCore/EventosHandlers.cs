@@ -80,6 +80,10 @@ namespace RagnarokCore
             _.Player.IsInvisible = false;
             _.Player.IsGodModeEnabled = false;
             _.Player.NoClipEnabled = false;
+            
+            // CustomInfo para los que son o han sido tutos
+            if (_.Player.Role.Type == RoleType.Tutorial)
+                _.Player.CustomInfo = "Soy gay por haber sido tuto o por serlo";
         }
     }
 }
