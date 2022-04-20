@@ -43,34 +43,34 @@ namespace RagnarokCore.Comandos
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
+            if (!Round.IsStarted)
+            {
+                response = "No puedes usar comandos si la ronda no ha empezado";
+                return false;
+            }
+            Player send = Player.Get((CommandSender) sender);
+            //Si el sender no tiene permisos
             if (!sender.CheckPermission("ragnarok.donadores"))
             {
-                response = "No tienes permisos";
-                return false;
-            }
-            Player ply = Player.Get((CommandSender)sender);
-
-            if (ply.Role.Type != RoleType.Spectator)
-            {
-                response = "No eres espectador";
+                response = "No tienes permisos para ejecutar este comando";
                 return false;
             }
 
-            if (ply.Role.Type == RoleType.Spectator)
+            if (send.Role.Type == RoleType.Tutorial)
             {
-                ply.SetRole(RoleType.Tutorial, SpawnReason.ForceClass);
+                send.Role.Type = RoleType.Spectator;
+                response = "Ahora eres espectador";
+                return true; 
+            }
+
+            if (send.Role.Type == RoleType.Spectator)
+            {
+                send.Role.Type = RoleType.Tutorial;
                 response = "Ahora eres tutorial";
                 return true;
             }
 
-            if (ply.Role.Type == RoleType.Tutorial)
-            {
-                ply.SetRole(RoleType.Spectator, SpawnReason.ForceClass);
-                response = "Ahora eres espectador";
-                return true;
-            }
-
-            response = "Stacktrace: Fallo en el comando, reporta esto con una captura al Dev del servidor";
+            response = "Tienes que ser espectador o tutorial para usar este comando";
             return false;
         }
     }
@@ -126,35 +126,37 @@ namespace RagnarokCore.Comandos
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
+            if (!Round.IsStarted)
+            {
+                response = "No puedes usar comandos si la ronda no ha empezado";
+                return false;
+            }
+            
+            Player send = Player.Get((CommandSender) sender);
+            //Si el sender no tiene permisos
             if (!sender.CheckPermission("ragnarok.donadores"))
             {
-                response = "No tienes permisos";
+                response = "No tienes permisos para ejecutar este comando";
                 return false;
             }
-            Player p = Player.Get((CommandSender)sender);
-
-            if (p.Role.Type != RoleType.Tutorial)
+            //Si el sender no es tutorial
+            if (send.Role != RoleType.Tutorial)
             {
-                response = "No eres tutorial para ejecutar el comando";
+                response = "Tienes que estar en tutorial para poder usar este comando";
                 return false;
             }
-            if (p.Role.Type == RoleType.Tutorial)
-            {
-                p.IsInvisible = true;
-                response = "Ahora eres invisible";
-                return true;
-            }
 
-            // Fix al no poder quitarte el invis una vez activado
-            if (p.IsInvisible = true)
+            if (send.IsInvisible)
             {
-                p.IsInvisible = false;
+                send.IsInvisible = false;
                 response = "Ya no eres invisible";
                 return true;
             }
-
-            response = "Stacktrace: Fallo en el comando, reporta esto con una captura al Dev del servidor";
-            return false;
+            
+           
+            send.IsInvisible = true;
+            response = "Ahora eres invisible";
+            return true;
         }
     }
 
@@ -166,34 +168,36 @@ namespace RagnarokCore.Comandos
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
+            if (!Round.IsStarted)
+            {
+                response = "No puedes usar comandos si la ronda no ha empezado";
+                return false;
+            }
+            
+            Player send = Player.Get((CommandSender) sender);
+            //Si el sender no tiene permisos
             if (!sender.CheckPermission("ragnarok.donadores"))
             {
-                response = "No tienes permisos";
+                response = "No tienes permisos para ejecutar este comando";
                 return false;
             }
-            Player _ = Player.Get((CommandSender)sender);
-
-            if (_.Role.Type != RoleType.Tutorial)
+            //Si el sender no es tutorial
+            if (send.Role != RoleType.Tutorial)
             {
-                response = "No eres tutorial";
+                response = "Tienes que estar en tutorial para poder usar este comando";
                 return false;
             }
-            if (_.Role.Type == RoleType.Tutorial)
+            //Si ya tiene el noclip activado, desactivarlo
+            if (send.NoClipEnabled)
             {
-                _.NoClipEnabled = true;
-                response = "Hecho, usa ALT para empezar a volar";
+                send.NoClipEnabled = false;
+                response = "Noclip desactivado";
                 return true;
             }
-            // Fix al no poder desactivarle el Noclip
-            if (_.NoClipEnabled = true)
-            {
-                _.NoClipEnabled = false;
-                response = "Ya no puedes volar";
-                return true;
-            }
-
-            response = "Stacktrace: Fallo en el comando, reporta esto con una captura al Dev del servidor";
-            return false;
+            //Activar el noclip si no lo tenia activado
+            send.NoClipEnabled = true;
+            response = "Noclip Activado";
+            return true;
         }
     }
 
