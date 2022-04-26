@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Respawning;
 using Exiled.API.Features;
+using CustomPlayerEffects;
+using Exiled.API.Enums;
 
 namespace RagnarokCore
 {
@@ -59,14 +61,14 @@ namespace RagnarokCore
         {
             if (ev.NextKnownTeam == SpawnableTeamType.ChaosInsurgency)
             {
-                Cassie.Message(plugin.Config.ChaosCassie, false, false, true);
+                Cassie.Message(plugin.Config.ChaosCassie, false, true, true);
             }
         }
         public void OnEating330(EatingScp330EventArgs ev)
         {
             if (plugin.Config.Check330Eating)
             {
-                Log.Debug($"{ev.Player.Nickname} se comio un caramelo: {ev.Candy}");
+                Log.Debug($"{ev.Player.Nickname} se comio un caramelo: {ev.Candy.Kind}");
             }
         }
         public void OnBanning(BanningEventArgs ev)
@@ -76,14 +78,60 @@ namespace RagnarokCore
 
         public void OnChangingRole(ChangingRoleEventArgs _)
         {
-            // Fix al no poder quitarte el invis una vez activado y el NoClip
+            // Quita el noclip, invis, god y Bypass al cambiar de clase
             _.Player.IsInvisible = false;
             _.Player.IsGodModeEnabled = false;
             _.Player.NoClipEnabled = false;
+            _.Player.IsBypassModeEnabled = false;
             
             // CustomInfo para los que son o han sido tutos
             if (_.Player.Role.Type == RoleType.Tutorial)
                 _.Player.CustomInfo = "Soy gay por haber sido tuto o por serlo";
+        }
+
+        public void OnHurting(HurtingEventArgs ev)
+        {
+            if (ev.Target == null && ev.Attacker == null)
+                return;
+
+            if (ev.Target.GetEffectActive<Invisible>())
+                ev.IsAllowed = false;
+
+            if (ev.Attacker.Role.Type == RoleType.Tutorial)
+            {
+                ev.IsAllowed = false;
+                ev.Attacker.ShowHint("No puedes hacerle daños a los demas siendo tutorial", 5f);
+            }
+
+            switch (ev.Handler.Type)
+            {
+                case DamageType.Explosion:
+                {
+                    ev.Amount = 400;
+                    break;
+                }
+                case DamageType.Scp0492:
+                {
+                    ev.Amount = 40;
+                    break;
+                }
+                case DamageType.Scp939:
+                {
+                    if (MainClass.Singleton.Config.Scp939InstaKill)
+                    {
+                        ev.Amount = 1000;
+                    }
+                    break;
+                }
+            }
+        }
+
+        public void OnUsedItem(UsedItemEventArgs ev)
+        {
+            if (ev.Item.Type == ItemType.Painkillers)
+                ev.Player.ResetStamina();
+            if (ev.Item.Type == ItemType.SCP500)
+                ev.Player.ArtificialHealth = 100f;
         }
     }
 }

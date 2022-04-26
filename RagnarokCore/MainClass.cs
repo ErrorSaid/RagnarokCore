@@ -29,6 +29,8 @@ namespace RagnarokCore
             Scp330Handler.EatingScp330 += Ev.OnEating330;
             PlayerHandler.Banning += Ev.OnBanning;
             PlayerHandler.ChangingRole += Ev.OnChangingRole;
+            PlayerHandler.Hurting += Ev.OnHurting;
+            PlayerHandler.UsedItem += Ev.OnUsedItem;
 
             base.OnEnabled();
             Patch();
@@ -40,6 +42,8 @@ namespace RagnarokCore
             Scp330Handler.EatingScp330 -= Ev.OnEating330;
             PlayerHandler.Banning -= Ev.OnBanning;
             PlayerHandler.ChangingRole -= Ev.OnChangingRole;
+            PlayerHandler.Hurting -= Ev.OnHurting;
+            PlayerHandler.UsedItem -= Ev.OnUsedItem;
 
             Singleton = null;
             Ev = null;
