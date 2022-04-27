@@ -133,5 +133,59 @@ namespace RagnarokCore
             if (ev.Item.Type == ItemType.SCP500)
                 ev.Player.ArtificialHealth = 100f;
         }
+
+        public void OnPickingUpItem(PickingUpItemEventArgs ev)
+        {
+            if (ev.Player == null)
+                return;
+
+            if (ev.Player.Role.Type == RoleType.Tutorial && !ev.Player.IsBypassModeEnabled)
+                ev.IsAllowed = false;
+        }
+
+        public void OnPickingUp330(PickingUpScp330EventArgs ev)
+        {
+            if (ev.Player == null)
+                return;
+
+            if (ev.Player.Role.Type == RoleType.Tutorial && !ev.Player.IsBypassModeEnabled)
+                ev.IsAllowed = false;
+        }
+
+        public void OnPickingUpArmor(PickingUpArmorEventArgs ev)
+        {
+            if (ev.Player == null)
+                return;
+
+            if (ev.Player.Role.Type == RoleType.Tutorial && !ev.Player.IsBypassModeEnabled)
+                ev.IsAllowed = false;
+        }
+
+        public void OnPickingUpAmmo(PickingUpAmmoEventArgs ev)
+        {
+            if (ev.Player == null)
+                return;
+
+            if (ev.Player.Role.Type == RoleType.Tutorial && !ev.Player.IsBypassModeEnabled)
+                ev.IsAllowed = false;
+        }
+
+        public void OnInteractingDoor(InteractingDoorEventArgs ev)
+        {
+            if (ev.Player == null)
+                return;
+
+            if (ev.Player.Role.Type == RoleType.Tutorial && !ev.Player.IsBypassModeEnabled)
+                ev.IsAllowed = false;
+        }
+
+        public void OnInteractingLocker(InteractingLockerEventArgs ev)
+        {
+            if (ev.Player == null)
+                return;
+
+            if (ev.Player.Role.Type == RoleType.Tutorial && !ev.Player.IsBypassModeEnabled)
+                ev.IsAllowed = false;
+        }
     }
 }

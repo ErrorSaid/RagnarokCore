@@ -31,7 +31,13 @@ namespace RagnarokCore
             PlayerHandler.ChangingRole += Ev.OnChangingRole;
             PlayerHandler.Hurting += Ev.OnHurting;
             PlayerHandler.UsedItem += Ev.OnUsedItem;
-
+            PlayerHandler.PickingUpItem += Ev.OnPickingUpItem;
+            PlayerHandler.PickingUpScp330 += Ev.OnPickingUp330;
+            PlayerHandler.PickingUpArmor += Ev.OnPickingUpArmor;
+            PlayerHandler.PickingUpAmmo += Ev.OnPickingUpAmmo;
+            PlayerHandler.InteractingDoor += Ev.OnInteractingDoor;
+            PlayerHandler.InteractingLocker += Ev.OnInteractingLocker;
+                
             base.OnEnabled();
             Patch();
         }
@@ -44,6 +50,12 @@ namespace RagnarokCore
             PlayerHandler.ChangingRole -= Ev.OnChangingRole;
             PlayerHandler.Hurting -= Ev.OnHurting;
             PlayerHandler.UsedItem -= Ev.OnUsedItem;
+            PlayerHandler.PickingUpItem -= Ev.OnPickingUpItem;
+            PlayerHandler.PickingUpScp330 -= Ev.OnPickingUp330;
+            PlayerHandler.PickingUpArmor -= Ev.OnPickingUpArmor;
+            PlayerHandler.PickingUpAmmo -= Ev.OnPickingUpAmmo;
+            PlayerHandler.InteractingDoor -= Ev.OnInteractingDoor;
+            PlayerHandler.InteractingLocker -= Ev.OnInteractingLocker;
 
             Singleton = null;
             Ev = null;
