@@ -24,8 +24,6 @@ namespace RagnarokCore
 			"owner"
 		};
 		public float ColorInterval { get; set; } = 0.5f;
-		[Description("Cassie Respawn Chaos")]
-		public string ChaosCassie { get; set; } = "WARNING. THE CHAOS INSURGENCY HAS ENTERED THE FACILITY";
 		[Description("Caramelo Features")]
 		public bool Check330Eating { get; set; } = true;
 
