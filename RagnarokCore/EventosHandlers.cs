@@ -61,7 +61,7 @@ namespace RagnarokCore
         {
             if (ev.NextKnownTeam == SpawnableTeamType.ChaosInsurgency)
             {
-                Cassie.Message(plugin.Config.ChaosCassie, false, true, true);
+                Cassie.Message("MTFUNIT pitch_0.8 jam_001_3 Epsilon pitch_0.6 11 pitch_0.0 .g1 .g2 .g1 .g3 ChaosInsurgency Hasentered All Remaining Personnel are advised to surrender to the chaosinsurgency AWAITINGRECONTAINMENT Unspecified Number of SCPSUBJECTS", false, true, true);
             }
         }
         public void OnEating330(EatingScp330EventArgs ev)
