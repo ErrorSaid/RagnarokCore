@@ -13,8 +13,8 @@ namespace RagnarokCore
         public override string Author { get; } = "xNexus-ACS";
         public override string Name { get; } = "RagnarokCore";
         public override string Prefix { get; } = "ragnarok_core";
-        public override Version Version { get; } = new Version(0, 1, 0);
-        public override Version RequiredExiledVersion { get; } = new Version(5, 0, 0);
+        public override Version Version { get; } = new Version(0, 1, 1);
+        public override Version RequiredExiledVersion { get; } = new Version(5, 1, 3);
 
         public EventosHandlers Ev;
         public Harmony Harmony { get; private set; }
