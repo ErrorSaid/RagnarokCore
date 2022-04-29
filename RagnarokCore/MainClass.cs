@@ -14,7 +14,7 @@ namespace RagnarokCore
         public override string Name { get; } = "RagnarokCore";
         public override string Prefix { get; } = "ragnarok_core";
         public override Version Version { get; } = new Version(0, 1, 1);
-        public override Version RequiredExiledVersion { get; } = new Version(5, 1, 3);
+        public override Version RequiredExiledVersion { get; } = new Version(5, 2, 0);
 
         public EventosHandlers Ev;
         public Harmony Harmony { get; private set; }
